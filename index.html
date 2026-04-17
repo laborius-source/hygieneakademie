@@ -517,7 +517,7 @@
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                14.–15. Mai 2026
+                19.–20. Mai 2026 · 892,50 €
               </span>
               <span style="display:flex;align-items:center;gap:5px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -576,7 +576,7 @@
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                28. Mai 2026
+                18. Mai 2026 · 654,50 €
               </span>
               <span style="display:flex;align-items:center;gap:5px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -634,7 +634,7 @@
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                3.–4. Juni 2026
+                27.–28. Mai 2026 · 892,50 €
               </span>
               <span style="display:flex;align-items:center;gap:5px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -692,7 +692,7 @@
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                17. Juni 2026
+                27. Mai 2026 · 654,50 €
               </span>
               <span style="display:flex;align-items:center;gap:5px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -751,7 +751,7 @@
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                18. Juni 2026
+                09. Juli 2026 · 654,50 €
               </span>
               <span style="display:flex;align-items:center;gap:5px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -810,7 +810,7 @@
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                9. Juli 2026
+                Derzeit keine Termine — Auf Anfrage
               </span>
               <span style="display:flex;align-items:center;gap:5px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1123,16 +1123,29 @@
           <input type="text" id="unternehmen" name="unternehmen" required autocomplete="organization" class="form-input" placeholder="Musterfirma GmbH"/>
         </div>
         <div>
+          <label for="firmenanschrift" style="display:block;font-family:'Exo 2',sans-serif;font-size:0.82rem;font-weight:600;color:#CBD5E1;margin-bottom:6px;">Firmenanschrift</label>
+          <input type="text" id="firmenanschrift" name="firmenanschrift" autocomplete="street-address" class="form-input" placeholder="Musterstraße 1, 12345 Musterstadt"/>
+        </div>
+        <div>
           <label for="schulung" style="display:block;font-family:'Exo 2',sans-serif;font-size:0.82rem;font-weight:600;color:#CBD5E1;margin-bottom:6px;">Gewünschte Schulung *</label>
-          <select id="schulung" name="schulung" required class="form-input">
+          <select id="schulung" name="schulung" required class="form-input" onchange="updateDates(this.value)">
             <option value="">Bitte wählen…</option>
-            <option value="6022a">VDI 6022 – Kategorie A (2 Tage)</option>
-            <option value="6022b">VDI 6022 – Kategorie B (1 Tag)</option>
-            <option value="6023a">VDI 6023 – Kategorie A (2 Tage)</option>
-            <option value="6023b">VDI 6023 – Kategorie B (1 Tag)</option>
+            <option value="6022b">VDI 6022 – Kategorie B · Raumlufttechnik (1 Tag)</option>
+            <option value="6022a">VDI 6022 – Kategorie A · Raumlufttechnik (2 Tage)</option>
+            <option value="6023b">VDI 6023 – Kategorie B · Trinkwasserhygiene (1 Tag)</option>
+            <option value="6023a">VDI 6023 – Kategorie A · Trinkwasserhygiene (2 Tage)</option>
             <option value="2047">VDI 2047 – Verdunstungskühlanlagen (1 Tag)</option>
             <option value="2052">VDI 2052 – Gewerbliche Küchen (1 Tag)</option>
           </select>
+        </div>
+        <div>
+          <label for="termin" style="display:block;font-family:'Exo 2',sans-serif;font-size:0.82rem;font-weight:600;color:#CBD5E1;margin-bottom:6px;">Schulungstermin *</label>
+          <select id="termin" name="termin" required class="form-input">
+            <option value="">— bitte zuerst Schulung wählen —</option>
+          </select>
+          <p id="termin-hint" style="display:none;margin:6px 0 0;font-size:0.78rem;color:#F97316;">
+            Bitte per E-Mail anfragen: <a href="mailto:info@ladotec.de" style="color:#F97316;">info@ladotec.de</a>
+          </p>
         </div>
         <div>
           <label for="format" style="display:block;font-family:'Exo 2',sans-serif;font-size:0.82rem;font-weight:600;color:#CBD5E1;margin-bottom:6px;">Format</label>
@@ -1148,20 +1161,20 @@
             <option value="1">1 Person</option>
             <option value="2-5">2–5 Personen</option>
             <option value="6-10">6–10 Personen</option>
-            <option value="10+">Mehr als 10 (Inhouse)</option>
+            <option value="10+">Mehr als 10 (Inhouse anfragen)</option>
           </select>
         </div>
       </div>
       <div style="margin-top:20px;">
-        <label for="nachricht" style="display:block;font-family:'Exo 2',sans-serif;font-size:0.82rem;font-weight:600;color:#CBD5E1;margin-bottom:6px;">Nachricht / Wunschtermin</label>
+        <label for="nachricht" style="display:block;font-family:'Exo 2',sans-serif;font-size:0.82rem;font-weight:600;color:#CBD5E1;margin-bottom:6px;">Nachricht / Fragen</label>
         <textarea id="nachricht" name="nachricht" rows="4" class="form-input" style="resize:none;"
-                  placeholder="Wunschtermin oder Fragen…"></textarea>
+                  placeholder="Haben Sie Fragen oder besondere Anforderungen?"></textarea>
       </div>
       <div style="margin-top:20px;display:flex;align-items:flex-start;gap:10px;">
         <input type="checkbox" id="datenschutz" name="datenschutz" required
                style="margin-top:2px;width:16px;height:16px;cursor:pointer;accent-color:#F97316;flex-shrink:0;"/>
         <label for="datenschutz" style="color:#94A3B8;font-size:0.85rem;line-height:1.6;cursor:pointer;">
-          Ich habe die <a href="#" style="color:#F97316;text-decoration:underline;">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zur Bearbeitung der Anfrage zu. *
+          Ich habe die <a href="datenschutz.html" style="color:#F97316;text-decoration:underline;">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zur Bearbeitung der Anfrage zu. *
         </label>
       </div>
       <div style="margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;">
@@ -1213,7 +1226,7 @@
         </p>
         <div style="display:flex;align-items:center;gap:8px;">
           <div style="width:7px;height:7px;border-radius:50%;background:#22C55E;"></div>
-          <span style="color:#475569;font-size:0.78rem;">Nächster Termin: 14.–15. Mai 2026</span>
+          <span style="color:#475569;font-size:0.78rem;">Nächster Termin: 18. Mai 2026</span>
         </div>
       </div>
 
@@ -1235,26 +1248,41 @@
       <div>
         <p style="font-family:'Exo 2',sans-serif;font-weight:700;color:#CBD5E1;font-size:0.78rem;
              letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">Kontakt</p>
+        <p style="color:#475569;font-size:0.82rem;margin-bottom:12px;font-weight:600;">ladotec GmbH</p>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
           <li style="display:flex;align-items:flex-start;gap:8px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-top:2px;flex-shrink:0;" aria-hidden="true">
               <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#475569" stroke-width="2"/>
             </svg>
-            <a href="mailto:info@hygieneakademie.de" style="color:#475569;font-size:0.87rem;text-decoration:none;transition:color 0.2s;"
-               onmouseover="this.style.color='#F97316'" onmouseout="this.style.color='#475569'">info@hygieneakademie.de</a>
+            <a href="mailto:info@ladotec.de" style="color:#475569;font-size:0.87rem;text-decoration:none;transition:color 0.2s;"
+               onmouseover="this.style.color='#F97316'" onmouseout="this.style.color='#475569'">info@ladotec.de</a>
           </li>
           <li style="display:flex;align-items:flex-start;gap:8px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-top:2px;flex-shrink:0;" aria-hidden="true">
               <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke="#475569" stroke-width="2"/>
             </svg>
-            <span style="color:#475569;font-size:0.87rem;">+49 (0) 89 123 456 78</span>
+            <div>
+              <a href="tel:+4936074632770" style="display:block;color:#475569;font-size:0.87rem;text-decoration:none;transition:color 0.2s;"
+                 onmouseover="this.style.color='#F97316'" onmouseout="this.style.color='#475569'">+49 36074 632770</a>
+              <span style="color:#334155;font-size:0.78rem;">Dr. Laborius: +49 160 96691876</span><br/>
+              <span style="color:#334155;font-size:0.78rem;">M. Dölle: +49 151 70144304</span>
+            </div>
           </li>
           <li style="display:flex;align-items:flex-start;gap:8px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-top:2px;flex-shrink:0;" aria-hidden="true">
               <path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke="#475569" stroke-width="2"/>
               <circle cx="12" cy="11" r="3" stroke="#475569" stroke-width="2"/>
             </svg>
-            <span style="color:#475569;font-size:0.87rem;">München &amp; bundesweit</span>
+            <div>
+              <span style="display:block;color:#475569;font-size:0.87rem;">Galgenweg 38</span>
+              <span style="color:#475569;font-size:0.87rem;">37339 Kirchworbis</span>
+            </div>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="margin-top:2px;flex-shrink:0;" aria-hidden="true">
+              <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#475569" stroke-width="2"/>
+            </svg>
+            <span style="color:#475569;font-size:0.87rem;">Täglich 9:00 – 17:00 Uhr</span>
           </li>
         </ul>
       </div>
@@ -1262,13 +1290,13 @@
 
     <div style="border-top:1px solid #0E1C30;padding-top:24px;display:flex;flex-wrap:wrap;
          justify-content:space-between;align-items:center;gap:12px;">
-      <p style="color:#334155;font-size:0.78rem;margin:0;">© 2026 Hygieneakademie. Alle Rechte vorbehalten.</p>
+      <p style="color:#334155;font-size:0.78rem;margin:0;">© 2026 ladotec GmbH · Hygieneakademie. Alle Rechte vorbehalten.</p>
       <div style="display:flex;gap:24px;">
-        <a href="#" style="color:#334155;font-size:0.78rem;text-decoration:none;transition:color 0.2s;"
+        <a href="impressum.html" style="color:#334155;font-size:0.78rem;text-decoration:none;transition:color 0.2s;"
            onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#334155'">Impressum</a>
-        <a href="#" style="color:#334155;font-size:0.78rem;text-decoration:none;transition:color 0.2s;"
+        <a href="datenschutz.html" style="color:#334155;font-size:0.78rem;text-decoration:none;transition:color 0.2s;"
            onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#334155'">Datenschutz</a>
-        <a href="#" style="color:#334155;font-size:0.78rem;text-decoration:none;transition:color 0.2s;"
+        <a href="agb.html" style="color:#334155;font-size:0.78rem;text-decoration:none;transition:color 0.2s;"
            onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#334155'">AGB</a>
       </div>
     </div>
@@ -1371,6 +1399,47 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ─── Schulungstermin-Daten ──────────────────────────────────────
+  const TERMINE = {
+    '6022b': [{ val: '2026-05-18', label: '18. Mai 2026 · 654,50 €' }],
+    '6022a': [{ val: '2026-05-19', label: '19.–20. Mai 2026 · 892,50 €' }],
+    '6023b': [{ val: '2026-05-27', label: '27. Mai 2026 · 654,50 €' }],
+    '6023a': [{ val: '2026-05-27', label: '27.–28. Mai 2026 · 892,50 €' }],
+    '2047':  [{ val: '2026-07-09', label: '09. Juli 2026 · 654,50 €' }],
+    '2052':  [],
+  };
+
+  function updateDates(schulungId) {
+    const sel   = document.getElementById('termin');
+    const hint  = document.getElementById('termin-hint');
+    const dates = TERMINE[schulungId] || [];
+
+    sel.innerHTML = '';
+
+    if (!schulungId) {
+      sel.innerHTML = '<option value="">— bitte zuerst Schulung wählen —</option>';
+      sel.disabled = false;
+      hint.style.display = 'none';
+      return;
+    }
+
+    if (dates.length === 0) {
+      sel.innerHTML = '<option value="anfrage">Auf Anfrage</option>';
+      sel.disabled = true;
+      hint.style.display = 'block';
+      return;
+    }
+
+    hint.style.display = 'none';
+    sel.disabled = false;
+    dates.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.val;
+      opt.textContent = d.label;
+      sel.appendChild(opt);
+    });
+  }
 
   // ─── Form submit ─────────────────────────────────────────────────
   function handleSubmit(e) {
