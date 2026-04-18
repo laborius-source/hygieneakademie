@@ -522,7 +522,7 @@
 
       <!-- VDI 6022 A ── 2 Tage ───────────── -->
       <article class="course-card reveal"
-               onclick="document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'})"
+               onclick="openModal('6022a')"
                aria-label="VDI 6022 Kategorie A Schulung – 2 Tage">
         <img src="images/VDI-6022-Kat-A-300x300.jpg" alt="VDI 6022 Kategorie A – Raumlufttechnik" style="width:100%;height:120px;object-fit:cover;display:block;">
         <div style="display:flex;">
@@ -582,7 +582,7 @@
 
       <!-- VDI 6022 B ── 1 Tag ───────────── -->
       <article class="course-card reveal"
-               onclick="document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'})"
+               onclick="openModal('6022b')"
                aria-label="VDI 6022 Kategorie B Schulung – 1 Tag">
         <img src="images/VDI-6022-Kat-B-300x300.jpg" alt="VDI 6022 Kategorie B – Raumlufttechnik" style="width:100%;height:120px;object-fit:cover;display:block;">
         <div style="display:flex;">
@@ -642,7 +642,7 @@
 
       <!-- VDI 6023 A ── 2 Tage ───────────── -->
       <article class="course-card reveal"
-               onclick="document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'})"
+               onclick="openModal('6023a')"
                aria-label="VDI 6023 Kategorie A Schulung – 2 Tage">
         <img src="images/VDI-6023-Kat-A-300x300.jpg" alt="VDI 6023 Kategorie A – Trinkwasserhygiene" style="width:100%;height:120px;object-fit:cover;display:block;">
         <div style="display:flex;">
@@ -701,7 +701,7 @@
 
       <!-- VDI 6023 B ── 1 Tag ───────────── -->
       <article class="course-card reveal"
-               onclick="document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'})"
+               onclick="openModal('6023b')"
                aria-label="VDI 6023 Kategorie B Schulung – 1 Tag">
         <img src="images/VDI-6023-Kat-B-300x300.jpg" alt="VDI 6023 Kategorie B – Trinkwasserhygiene" style="width:100%;height:120px;object-fit:cover;display:block;">
         <div style="display:flex;">
@@ -760,7 +760,7 @@
 
       <!-- VDI 2047 ── 1 Tag ───────────── -->
       <article class="course-card reveal"
-               onclick="document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'})"
+               onclick="openModal('2047')"
                aria-label="VDI 2047 Schulung – 1 Tag">
         <img src="images/VDI-2047-300x300.jpg" alt="VDI 2047 – Verdunstungskühlanlagen" style="width:100%;height:120px;object-fit:cover;display:block;">
         <div style="display:flex;">
@@ -820,8 +820,8 @@
 
       <!-- VDI 2052 ── 1 Tag ───────────── -->
       <article class="course-card reveal"
-               onclick="document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'})"
-               aria-label="VDI 2052 Schulung – 1 Tag">
+               onclick="openModal('2052')"
+               aria-label="VDI 2052 Schulung – Inhouse auf Anfrage">
         <img src="images/VDI-2052-kueche.jpg" alt="Gewerbliche Küche – Lüftungsanlagen nach VDI 2052" style="width:100%;height:120px;object-fit:cover;display:block;">
         <div style="display:flex;">
           <div class="card-stripe stripe-navy"></div>
@@ -1549,6 +1549,331 @@
       }, 3500);
     }, 1100);
   }
+</script>
+
+
+<!-- ══════════════════════════════════════════
+     KURS-DETAIL-MODAL
+═══════════════════════════════════════════ -->
+<div id="course-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+     style="display:none;position:fixed;inset:0;z-index:8000;overflow-y:auto;">
+  <!-- Backdrop -->
+  <div onclick="closeModal()" style="position:fixed;inset:0;background:rgba(7,14,24,0.7);backdrop-filter:blur(4px);"></div>
+  <!-- Panel -->
+  <div style="position:relative;max-width:720px;margin:40px auto 40px;background:#fff;border-radius:16px;
+              overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.35);">
+    <!-- Kurs-Bild -->
+    <div id="modal-img-wrap" style="position:relative;">
+      <img id="modal-img" src="" alt="" style="width:100%;height:200px;object-fit:cover;display:block;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(7,14,24,0.65));"></div>
+      <button onclick="closeModal()" aria-label="Schließen"
+              style="position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+                     border:none;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);
+                     color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+      <div style="position:absolute;bottom:16px;left:24px;">
+        <span id="modal-norm" style="font-family:'Exo 2',sans-serif;font-size:0.7rem;font-weight:700;
+              letter-spacing:0.12em;text-transform:uppercase;color:#F97316;"></span>
+        <h2 id="modal-title" style="font-family:'Exo 2',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;margin:4px 0 0;"></h2>
+      </div>
+    </div>
+    <!-- Inhalt -->
+    <div style="padding:28px 32px 36px;">
+      <!-- Tags -->
+      <div id="modal-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;"></div>
+      <!-- Einleitung -->
+      <p id="modal-intro" style="color:#334155;font-size:1rem;line-height:1.75;margin-bottom:24px;"></p>
+      <!-- Nutzen -->
+      <div class="modal-section">
+        <h3 style="font-family:'Exo 2',sans-serif;font-size:0.78rem;font-weight:700;color:#F97316;
+                   letter-spacing:0.12em;text-transform:uppercase;margin:0 0 10px;padding-bottom:8px;
+                   border-bottom:2px solid #FFF7ED;">Ihr Nutzen</h3>
+        <ul id="modal-nutzen" style="padding-left:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:8px;"></ul>
+      </div>
+      <!-- Zielgruppe -->
+      <div class="modal-section" style="margin-top:20px;">
+        <h3 style="font-family:'Exo 2',sans-serif;font-size:0.78rem;font-weight:700;color:#F97316;
+                   letter-spacing:0.12em;text-transform:uppercase;margin:0 0 10px;padding-bottom:8px;
+                   border-bottom:2px solid #FFF7ED;">Zielgruppe</h3>
+        <p id="modal-zielgruppe" style="color:#475569;font-size:0.93rem;line-height:1.7;margin:0;"></p>
+      </div>
+      <!-- Anforderungen -->
+      <div id="modal-anforderungen-wrap" class="modal-section" style="margin-top:20px;">
+        <h3 style="font-family:'Exo 2',sans-serif;font-size:0.78rem;font-weight:700;color:#F97316;
+                   letter-spacing:0.12em;text-transform:uppercase;margin:0 0 10px;padding-bottom:8px;
+                   border-bottom:2px solid #FFF7ED;">Anforderungen</h3>
+        <p id="modal-anforderungen" style="color:#475569;font-size:0.93rem;line-height:1.7;margin:0;"></p>
+      </div>
+      <!-- Inhalte -->
+      <div class="modal-section" style="margin-top:20px;">
+        <h3 style="font-family:'Exo 2',sans-serif;font-size:0.78rem;font-weight:700;color:#F97316;
+                   letter-spacing:0.12em;text-transform:uppercase;margin:0 0 10px;padding-bottom:8px;
+                   border-bottom:2px solid #FFF7ED;">Seminarinhalte</h3>
+        <ul id="modal-inhalte" style="padding-left:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:7px;"></ul>
+      </div>
+      <!-- Hinweise -->
+      <div id="modal-hinweise-wrap" class="modal-section" style="margin-top:20px;background:#FFF7ED;border-radius:8px;padding:16px 18px;">
+        <h3 style="font-family:'Exo 2',sans-serif;font-size:0.78rem;font-weight:700;color:#92400E;
+                   letter-spacing:0.12em;text-transform:uppercase;margin:0 0 10px;">Hinweise</h3>
+        <ul id="modal-hinweise" style="padding-left:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:7px;"></ul>
+      </div>
+      <!-- Abschluss -->
+      <div style="margin-top:20px;background:#EEF2F8;border-radius:8px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+        <div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#F97316,#EA6A0B);
+                    display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z" fill="white" opacity=".9"/><path d="M9 12l2 2 4-4" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Exo 2',sans-serif;font-weight:700;color:#1E3A5F;font-size:0.88rem;margin:0 0 2px;">Abschluss</p>
+          <p id="modal-abschluss" style="color:#475569;font-size:0.88rem;margin:0;"></p>
+        </div>
+      </div>
+      <!-- CTA -->
+      <button onclick="closeModal();setTimeout(()=>document.getElementById('anmeldung').scrollIntoView({behavior:'smooth'}),100);"
+              style="margin-top:24px;width:100%;font-family:'Exo 2',sans-serif;font-weight:700;font-size:1rem;
+                     padding:14px;border-radius:8px;border:none;background:linear-gradient(135deg,#F97316,#EA6A0B);
+                     color:#fff;cursor:pointer;transition:opacity 0.2s;"
+              onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        Jetzt für diese Schulung anmelden →
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+var KURSE = {
+  '6022a': {
+    norm: 'VDI 6022', title: 'Raumlufttechnik · Kategorie A',
+    img: 'images/VDI-6022-Kat-A-300x300.jpg',
+    tags: ['Kategorie A','2 Tage','19.–20. Mai 2026','892,50 €','Online','Zertifikat'],
+    intro: 'Qualifizieren Sie sich für eigenständige Hygieneinspektionen an raumlufttechnischen Anlagen. Nach VDI 6022 A dürfen anspruchsvolle Tätigkeiten an RLT-Anlagen nur von Fachpersonal durchgeführt werden. In dieser Schulung erhalten Sie die nötige Sachkunde, um eigenständig Hygieneinspektionen, Wartungen und Arbeiten an RLT-Anlagen vorzunehmen.',
+    nutzen: [
+      'Sie erfüllen nach dieser Schulung die Voraussetzung der VDI 6022 Kategorie A zur Arbeit an raumlufttechnischen Anlagen.',
+      'Sie sind befugt zur eigenständigen Durchführung von Hygieneinspektionen und Wartungen an RLT-Anlagen.',
+      'Eine abgeschlossene Schulung nach Kategorie A beinhaltet die Schulung nach Kategorie B.',
+    ],
+    zielgruppe: 'Ingenieure und Techniker aus der technischen Gebäudeausrüstung, Technische Leiter aus Industrie und Mittelstand, Sachverständige und Sicherheitsingenieure, die RLT-Anlagen hygienebewusst planen, verantwortlich errichten, warten oder inspizieren und Mitarbeiter mit der Qualifikation B anleiten wollen.',
+    anforderungen: 'Mindestens Abschluss als Meister oder Techniker der Fachrichtung Technische Gebäudeausrüstung, Versorgungstechnik oder gleichwertig sowie mehrjährige Berufserfahrung mit RLT-Anlagen. Alternativ: fundierte Ausbildung in Hygiene, Umweltmedizin oder Mikrobiologie und mindestens fünfjährige praktische Erfahrung im Bereich der Raumlufttechnik.',
+    inhalte: [
+      'Hygienegrundlagen in der Lüftungstechnik',
+      'Medizinische Aspekte der Raumluftqualität',
+      'Anforderungen an Planung, Herstellung, Errichtung, Wartung und Betrieb von RLT-Anlagen',
+      'Messverfahren zur Überwachung von RLT-Anlagen',
+      'Erkennung und Bewertung sichtbarer Hygienemängel',
+      'Techniken zur Erfassung mikrobiologischer Parameter',
+      'Maßgebende Rechtsvorschriften und technische Regeln für den Betrieb von RLT-Anlagen',
+      'Erfahrungsaustausch und Diskussion',
+      'Schriftliche Abschlussprüfung',
+    ],
+    hinweise: [
+      'Gemäß VDI 6022 wird eine Wiederholung der Schulung alle 5 Jahre empfohlen.',
+      'Die Voraussetzungen (Berufsausbildung, Berufserfahrung) werden nicht im Vorfeld geprüft — das Zertifikat ist nur in Verbindung mit diesen Qualifikationen im Sinne der VDI 6022 gültig.',
+    ],
+    abschluss: 'Nach bestandener schriftlicher Prüfung erhalten Sie eine normkonforme Teilnahmebescheinigung der Hygieneakademie (ladotec GmbH).'
+  },
+  '6022b': {
+    norm: 'VDI 6022', title: 'Raumlufttechnik · Kategorie B',
+    img: 'images/VDI-6022-Kat-B-300x300.jpg',
+    tags: ['Kategorie B','1 Tag','18. Mai 2026','654,50 €','Online','Teilnahmebescheinigung'],
+    intro: 'Grundlagenschulung für Betreiber und Bestandspersonal von raumlufttechnischen Anlagen. Diese eintägige Schulung vermittelt die hygienerelevanten Grundkenntnisse, die Betreiber und technisches Personal für den sicheren Betrieb von RLT-Anlagen benötigen.',
+    nutzen: [
+      'Sie erfüllen nach dieser Schulung die Voraussetzung der VDI 6022 Kategorie B für den Betrieb von RLT-Anlagen.',
+      'Sie kennen die hygienischen Anforderungen und gesetzlichen Grundlagen im Betrieb von Lüftungsanlagen.',
+      'Sie sind in der Lage, Hygienemängel frühzeitig zu erkennen und korrekt zu dokumentieren.',
+    ],
+    zielgruppe: 'Betreiber von RLT-Anlagen, Hausmeister, technisches Bestandspersonal, Gebäudedienstleister sowie alle Personen, die RLT-Anlagen bedienen, reinigen oder kontrollieren.',
+    anforderungen: 'Keine besonderen Voraussetzungen erforderlich. Die Schulung richtet sich an alle Personen, die mit dem Betrieb von RLT-Anlagen betraut sind.',
+    inhalte: [
+      'Hygienegrundlagen in der Lüftungstechnik',
+      'Anforderungen an den Betrieb von RLT-Anlagen nach VDI 6022',
+      'Reinigung, Desinfektion und Instandhaltung',
+      'Erkennung von Hygienemängeln und Dokumentation',
+      'Maßgebende Rechtsvorschriften und technische Regeln',
+      'Erfahrungsaustausch und Diskussion',
+    ],
+    hinweise: [
+      'Gemäß VDI 6022 wird eine Wiederholung der Schulung alle 5 Jahre empfohlen.',
+      'Die Kategorie B berechtigt zur Durchführung einfacher Betriebsaufgaben unter Aufsicht eines Kategorie-A-Sachkundigen.',
+    ],
+    abschluss: 'Nach erfolgreicher Teilnahme erhalten Sie eine normkonforme Teilnahmebescheinigung der Hygieneakademie (ladotec GmbH).'
+  },
+  '6023a': {
+    norm: 'VDI 6023', title: 'Trinkwasserhygiene · Kategorie A',
+    img: 'images/VDI-6023-Kat-A-300x300.jpg',
+    tags: ['Kategorie A','2 Tage','27.–28. Mai 2026','892,50 €','Online','Zertifikat','DVGW-konform'],
+    intro: 'Sachkundennachweis für Planung und Ausführung von Trinkwasserinstallationen nach VDI 6023. Diese Schulung qualifiziert Sie für alle anspruchsvollen Tätigkeiten an Trinkwasserinstallationen — von der Planung bis zur Inbetriebnahme — konform zur VDI 6023 Blatt 1 und DVGW W 1000.',
+    nutzen: [
+      'Sie erwerben die Sachkunde zur Planung, Ausführung und Inbetriebnahme von Trinkwasserinstallationen nach VDI 6023 Kategorie A.',
+      'Sie sind befugt, Trinkwasserinstallationen eigenständig zu planen, auszuführen und abzunehmen.',
+      'Sie erfüllen die Anforderungen des DVGW-Merkblatts W 1000.',
+      'Eine Schulung nach Kategorie A beinhaltet die Schulung nach Kategorie B.',
+    ],
+    zielgruppe: 'Installateure, Techniker und Ingenieure der Versorgungstechnik / TGA, Planer von Trinkwasserinstallationen, ausführende Fachbetriebe sowie Sachverständige für Trinkwasserhygiene.',
+    anforderungen: 'Abschluss als Installateur, Techniker oder Ingenieur der Fachrichtung Versorgungstechnik, Sanitärtechnik oder gleichwertig sowie mindestens zweijährige Berufserfahrung in der Ausführung von Trinkwasserinstallationen.',
+    inhalte: [
+      'Rechtliche Grundlagen: TrinkwV, AVBWasserV, DIN EN 806, DIN 1988',
+      'Hygieneanforderungen an Trinkwasserinstallationen nach VDI 6023',
+      'Planung und Auslegung von Trinkwasserinstallationen',
+      'Werkstoffe, Armaturen und Systeme',
+      'Legionellenprävention: Ursachen, Risikobeurteilung und Maßnahmen',
+      'Probenahme und Untersuchungsverfahren',
+      'Spülen, Desinfizieren und Inbetriebnahme',
+      'Sanierungsmaßnahmen bei Grenzwertüberschreitungen',
+      'Schriftliche Abschlussprüfung',
+    ],
+    hinweise: [
+      'Gemäß VDI 6023 wird eine Wiederholung der Schulung alle 5 Jahre empfohlen.',
+      'Die Voraussetzungen (Ausbildung, Berufserfahrung) werden nicht im Vorfeld geprüft — das Zertifikat ist nur in Verbindung mit diesen Qualifikationen gültig.',
+    ],
+    abschluss: 'Nach bestandener schriftlicher Prüfung erhalten Sie eine normkonforme Teilnahmebescheinigung der Hygieneakademie (ladotec GmbH).'
+  },
+  '6023b': {
+    norm: 'VDI 6023', title: 'Trinkwasserhygiene · Kategorie B',
+    img: 'images/VDI-6023-Kat-B-300x300.jpg',
+    tags: ['Kategorie B','1 Tag','27. Mai 2026','654,50 €','Online','Teilnahmebescheinigung'],
+    intro: 'Grundlagenschulung für Betreiber und Wartungspersonal von Trinkwasserinstallationen. Diese eintägige Schulung vermittelt die wesentlichen Kenntnisse zur Legionellenprävention und zum hygienegerechten Betrieb von Trinkwasserinstallationen.',
+    nutzen: [
+      'Sie erwerben die Sachkunde für Betrieb und Instandhaltung von Trinkwasserinstallationen nach VDI 6023 Kategorie B.',
+      'Sie kennen die rechtlichen Pflichten des Betreibers und die Anforderungen der Trinkwasserverordnung.',
+      'Sie sind in der Lage, Legionellenrisiken zu erkennen und geeignete Schutzmaßnahmen einzuleiten.',
+    ],
+    zielgruppe: 'Betreiber von Gebäuden mit Trinkwasserinstallationen, Hausmeister, Facility-Manager, technisches Betriebs- und Wartungspersonal sowie alle Personen, die Trinkwasseranlagen bedienen und überwachen.',
+    anforderungen: 'Keine besonderen Voraussetzungen erforderlich.',
+    inhalte: [
+      'Rechtliche Grundlagen: TrinkwV, Betreiberpflichten',
+      'Hygienische Grundanforderungen an Trinkwasserinstallationen',
+      'Legionellenprävention: Ursachen, Risikogruppen, Betriebstemperaturen',
+      'Inspektion, Spülung und Dokumentation',
+      'Probenahme und Umgang mit Grenzwertüberschreitungen',
+      'Erfahrungsaustausch und Diskussion',
+    ],
+    hinweise: [
+      'Gemäß VDI 6023 wird eine Wiederholung der Schulung alle 5 Jahre empfohlen.',
+    ],
+    abschluss: 'Nach erfolgreicher Teilnahme erhalten Sie eine normkonforme Teilnahmebescheinigung der Hygieneakademie (ladotec GmbH).'
+  },
+  '2047': {
+    norm: 'VDI 2047', title: 'Verdunstungskühlanlagen',
+    img: 'images/VDI-2047-300x300.jpg',
+    tags: ['Pflichtschulung','1 Tag','9. Juli 2026','654,50 €','Online','42. BImSchV'],
+    intro: 'Gesetzlich vorgeschriebene Schulung für Sachkundige im Betrieb von Verdunstungskühlanlagen und Nassabscheidern nach 42. BImSchV und VDI 2047 Blatt 2. Betreiber von Verdunstungskühlanlagen sind verpflichtet, sachkundiges Personal einzusetzen — diese Schulung erfüllt die gesetzliche Nachweispflicht.',
+    nutzen: [
+      'Sie erfüllen die gesetzliche Nachweispflicht nach 42. BImSchV für den Betrieb von Verdunstungskühlanlagen.',
+      'Sie erkennen und bewerten Legionellenrisiken und leiten geeignete Schutzmaßnahmen ein.',
+      'Sie kennen die Anforderungen an Betriebsbücher, Gefährdungsbeurteilungen und Prüfpflichten.',
+      'Sie können Probenahmen korrekt veranlassen und Untersuchungsergebnisse bewerten.',
+    ],
+    zielgruppe: 'Betreiber von Verdunstungskühlanlagen, Nassabscheidern und Hybridkühltürmen sowie beauftragte Sachkundige, Facility-Manager und technisches Betriebspersonal.',
+    anforderungen: 'Technisches Grundverständnis für Kühlanlagen und deren Betrieb. Gemäß 42. BImSchV ist der Nachweis der Sachkunde Voraussetzung für den Betrieb der Anlage.',
+    inhalte: [
+      'Rechtliche Grundlagen: 42. BImSchV, VDI 2047 Blatt 2',
+      'Aufbau und Funktionsweise von Verdunstungskühlanlagen',
+      'Legionellenbiologie: Wachstumsbedingungen, Risikofaktoren, Grenzwerte',
+      'Gefährdungsbeurteilung und Risikoanalyse',
+      'Betriebsaufzeichnungen, Betriebsbuch und Dokumentationspflichten',
+      'Reinigungs-, Desinfektions- und Instandhaltungsmaßnahmen',
+      'Probenahme und Untersuchungsverfahren',
+      'Maßnahmen bei Grenzwertüberschreitungen',
+      'Erfahrungsaustausch und Diskussion',
+    ],
+    hinweise: [
+      'Diese Schulung erfüllt die gesetzliche Nachweispflicht nach § 3 Abs. 4 der 42. BImSchV.',
+      'Gemäß VDI 2047 Blatt 2 wird eine Wiederholung der Schulung alle 3 Jahre empfohlen.',
+      'Betreiber sind verpflichtet, den Sachkundenachweis auf Verlangen der zuständigen Behörde vorzulegen.',
+    ],
+    abschluss: 'Nach erfolgreicher Teilnahme erhalten Sie eine Teilnahmebescheinigung als Nachweis der Sachkunde nach 42. BImSchV.'
+  },
+  '2052': {
+    norm: 'VDI 2052', title: 'Gewerbliche Küchen',
+    img: 'images/VDI-2052-kueche.jpg',
+    tags: ['Inhouse auf Anfrage','1 Tag','Präsenz','Zertifikat'],
+    intro: 'Schulung für Planung, Ausführung und Betrieb von Lüftungsanlagen in gewerblichen Küchen nach VDI 2052. Diese Schulung vermittelt das Fachwissen für den normgerechten Betrieb von Küchenabluftanlagen — mit Schwerpunkten auf Fettabscheidung, Brandschutz und Hygiene.',
+    nutzen: [
+      'Sie kennen die normativen Anforderungen an Küchenabluftanlagen nach VDI 2052.',
+      'Sie sind in der Lage, Lüftungskonzepte für gewerbliche Küchen zu beurteilen und umzusetzen.',
+      'Sie verstehen die Zusammenhänge zwischen Brandschutz, Fettabscheidung und Hygiene.',
+      'Inhouse-Schulungen können individuell auf Ihr Unternehmen zugeschnitten werden.',
+    ],
+    zielgruppe: 'Planer, Installateure und Betreiber von Lüftungsanlagen in Großküchen, Restaurantküchen und Betriebskantinen sowie Küchentechniker und Facility-Manager.',
+    anforderungen: 'Technische Grundkenntnisse in Gebäudetechnik oder Küchenplanung sind hilfreich, aber nicht zwingend erforderlich.',
+    inhalte: [
+      'Rechtliche Grundlagen: VDI 2052, DIN 18868, Landesbauordnungen',
+      'Luftführung in gewerblichen Küchen: Zu- und Abluft, Strömungsführung',
+      'Fettabscheider: Typen, Anforderungen, Reinigung und Wartung',
+      'Brandschutzanforderungen für Küchenabluftanlagen',
+      'Lärm- und Wärmebelastung am Arbeitsplatz',
+      'Hygieneanforderungen und Reinigungsintervalle',
+      'Berechnung und Auslegung von Abluftanlagen',
+      'Erfahrungsaustausch und praktische Beispiele',
+    ],
+    hinweise: [
+      'Diese Schulung wird ausschließlich als Inhouse-Veranstaltung angeboten — individuell zugeschnitten auf Ihr Unternehmen.',
+      'Für Terminanfragen und Angebote wenden Sie sich bitte an info@ladotec.de oder +49 36074 632770.',
+    ],
+    abschluss: 'Nach erfolgreicher Teilnahme erhalten Sie eine normkonforme Teilnahmebescheinigung der Hygieneakademie (ladotec GmbH).'
+  }
+};
+
+function openModal(id) {
+  var k = KURSE[id]; if (!k) return;
+  document.getElementById('modal-img').src = k.img;
+  document.getElementById('modal-img').alt = k.norm + ' – ' + k.title;
+  document.getElementById('modal-norm').textContent = k.norm;
+  document.getElementById('modal-title').textContent = k.title;
+  document.getElementById('modal-intro').textContent = k.intro;
+  document.getElementById('modal-abschluss').textContent = k.abschluss;
+  document.getElementById('modal-zielgruppe').textContent = k.zielgruppe;
+
+  var tagsEl = document.getElementById('modal-tags');
+  tagsEl.innerHTML = '';
+  k.tags.forEach(function(t) {
+    var s = document.createElement('span');
+    s.textContent = t;
+    s.style.cssText = 'font-family:"Exo 2",sans-serif;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:3px;background:#EEF2F8;color:#1E3A5F;';
+    tagsEl.appendChild(s);
+  });
+
+  var nutzenEl = document.getElementById('modal-nutzen');
+  nutzenEl.innerHTML = '';
+  k.nutzen.forEach(function(n) {
+    var li = document.createElement('li');
+    li.style.cssText = 'display:flex;align-items:flex-start;gap:10px;color:#334155;font-size:0.93rem;line-height:1.65;';
+    li.innerHTML = '<span style="color:#F97316;font-size:1.1rem;flex-shrink:0;margin-top:1px;">✓</span>' + n;
+    nutzenEl.appendChild(li);
+  });
+
+  var inhalteEl = document.getElementById('modal-inhalte');
+  inhalteEl.innerHTML = '';
+  k.inhalte.forEach(function(item) {
+    var li = document.createElement('li');
+    li.style.cssText = 'display:flex;align-items:flex-start;gap:10px;color:#475569;font-size:0.9rem;line-height:1.6;';
+    li.innerHTML = '<span style="width:6px;height:6px;border-radius:50%;background:#F97316;flex-shrink:0;margin-top:7px;"></span>' + item;
+    inhalteEl.appendChild(li);
+  });
+
+  var anfEl = document.getElementById('modal-anforderungen');
+  anfEl.textContent = k.anforderungen || '';
+  document.getElementById('modal-anforderungen-wrap').style.display = k.anforderungen ? 'block' : 'none';
+
+  var hinweiseEl = document.getElementById('modal-hinweise');
+  hinweiseEl.innerHTML = '';
+  k.hinweise.forEach(function(h) {
+    var li = document.createElement('li');
+    li.style.cssText = 'display:flex;align-items:flex-start;gap:10px;color:#92400E;font-size:0.88rem;line-height:1.6;';
+    li.innerHTML = '<span style="flex-shrink:0;margin-top:2px;">ⓘ</span>' + h;
+    hinweiseEl.appendChild(li);
+  });
+  document.getElementById('modal-hinweise-wrap').style.display = k.hinweise && k.hinweise.length ? 'block' : 'none';
+
+  var modal = document.getElementById('course-modal');
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('course-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 </script>
 
 
