@@ -1,0 +1,13 @@
+services:
+  hygieneakademie:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hygieneakademie.rule=Host(`hygieneakademie.gmbh`) || Host(`www.hygieneakademie.gmbh`) || Host(`srv1071711.hstgr.cloud`)"
+      - "traefik.http.routers.hygieneakademie.entrypoints=websecure"
+      - "traefik.http.routers.hygieneakademie.tls=true"
+      - "traefik.http.routers.hygieneakademie.tls.certresolver=letsencrypt"
+      - "traefik.http.services.hygieneakademie.loadbalancer.server.port=80"
