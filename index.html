@@ -264,10 +264,18 @@
     .reveal.in { opacity: 1; transform: none; }
 
     /* ─── Decorative corner brackets ─── */
-    .corner-tl { position: absolute; top: 24px; left: 24px; width: 28px; height: 28px;
+    .corner-tl { position: absolute; top: 24px; left: 24px; width: 28px; height: 28px; z-index: 1;
       border-top: 2px solid rgba(249,115,22,0.35); border-left: 2px solid rgba(249,115,22,0.35); }
-    .corner-br { position: absolute; bottom: 24px; right: 24px; width: 28px; height: 28px;
+    .corner-br { position: absolute; bottom: 24px; right: 24px; width: 28px; height: 28px; z-index: 1;
       border-bottom: 2px solid rgba(249,115,22,0.35); border-right: 2px solid rgba(249,115,22,0.35); }
+
+    /* ─── WebGL wave canvas ─── */
+    #wave-canvas {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      display: block;
+    }
 
     /* ─── Step circles ─── */
     .step-circle {
@@ -397,12 +405,15 @@
 <section class="blueprint-bg" style="min-height:100vh;display:flex;align-items:center;
        justify-content:center;padding:120px 24px 80px;position:relative;overflow:hidden;">
 
+  <!-- WebGL wave background -->
+  <canvas id="wave-canvas" aria-hidden="true"></canvas>
+
   <!-- Decorative corners -->
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
 
   <!-- Ambient glow -->
-  <div aria-hidden="true" style="position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);
+  <div aria-hidden="true" style="position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);z-index:1;
        width:600px;height:600px;border-radius:50%;
        background:radial-gradient(circle,rgba(249,115,22,0.07) 0%,transparent 65%);pointer-events:none;"></div>
 
@@ -2006,6 +2017,135 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close
       document.getElementById('cookie-banner').style.display = 'block';
     }
   })();
+</script>
+
+<!-- ══════════════════════════════════════════
+     WEBGL WAVE BACKGROUND
+═══════════════════════════════════════════ -->
+<script>
+(function () {
+  var canvas = document.getElementById('wave-canvas');
+  if (!canvas) return;
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+
+  var vertSrc = [
+    'attribute vec2 a_pos;',
+    'varying vec2 vUv;',
+    'void main(){',
+    '  vUv = a_pos * 0.5 + 0.5;',
+    '  gl_Position = vec4(a_pos, 0.0, 1.0);',
+    '}'
+  ].join('\n');
+
+  var fragSrc = [
+    'precision highp float;',
+    'uniform float uTime;',
+    'uniform vec2 uRes;',
+    'varying vec2 vUv;',
+
+    'float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }',
+
+    'float noise(vec2 p){',
+    '  vec2 i=floor(p); vec2 f=fract(p);',
+    '  vec2 u=f*f*(3.0-2.0*f);',
+    '  return mix(mix(hash(i),hash(i+vec2(1,0)),u.x),',
+    '             mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);',
+    '}',
+
+    'void main(){',
+    '  vec2 uv = vUv;',
+    '  float aspect = uRes.x / uRes.y;',
+
+    // three wave layers with different frequencies and speeds
+    '  float w1 = sin(uv.x * 4.5 * aspect + uTime * 0.55) * 0.09;',
+    '  float w2 = sin(uv.x * 2.8 * aspect - uTime * 0.38 + 1.8) * 0.07;',
+    '  float w3 = sin(uv.x * 7.2 * aspect + uTime * 0.92 + 4.2) * 0.04;',
+    '  float totalWave = w1 + w2 + w3;',
+
+    // subtle noise texture
+    '  float n = noise(uv * 4.0 + uTime * 0.15) * 0.03;',
+    '  float waveY = uv.y + totalWave + n;',
+
+    // color ramp: deep navy → indigo blue → bright cyan
+    '  vec3 cDeep  = vec3(0.027, 0.055, 0.094);',  // #070E18
+    '  vec3 cMid   = vec3(0.04,  0.18,  0.42);',
+    '  vec3 cCyan  = vec3(0.08,  0.56,  0.88);',
+
+    '  float t = clamp(waveY, 0.0, 1.0);',
+    '  vec3 color = mix(cDeep, cMid,  smoothstep(0.0, 0.55, t));',
+    '  color      = mix(color, cCyan, smoothstep(0.4, 1.0, t) * 0.55);',
+
+    // highlight at wave crests
+    '  float crest = max(0.0, totalWave * 5.0);',
+    '  color += vec3(0.03, 0.12, 0.28) * crest;',
+
+    // very faint grid overlay (keep blueprint feel)
+    '  vec2 grid = abs(fract(uv * vec2(aspect * 6.0, 6.0)) - 0.5);',
+    '  float gridLine = 1.0 - smoothstep(0.0, 0.02, min(grid.x, grid.y));',
+    '  color += vec3(0.08, 0.18, 0.35) * gridLine * 0.18;',
+
+    '  gl_FragColor = vec4(color, 1.0);',
+    '}'
+  ].join('\n');
+
+  function compileShader(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+
+  var prog = gl.createProgram();
+  gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vertSrc));
+  gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fragSrc));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  // full-screen triangle
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  var posLoc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+  var uTimeLoc = gl.getUniformLocation(prog, 'uTime');
+  var uResLoc  = gl.getUniformLocation(prog, 'uRes');
+
+  function resize() {
+    var w = canvas.offsetWidth, h = canvas.offsetHeight;
+    canvas.width  = w * (window.devicePixelRatio || 1);
+    canvas.height = h * (window.devicePixelRatio || 1);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var t0 = performance.now();
+  var raf;
+  function render() {
+    var t = (performance.now() - t0) * 0.001;
+    gl.uniform1f(uTimeLoc, t);
+    gl.uniform2f(uResLoc, canvas.width, canvas.height);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    raf = requestAnimationFrame(render);
+  }
+  render();
+
+  // pause animation when hero leaves viewport (perf)
+  if ('IntersectionObserver' in window) {
+    var hero = canvas.parentElement;
+    new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        if (!raf) render();
+      } else {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    }, { threshold: 0 }).observe(hero);
+  }
+})();
 </script>
 
 </body>
